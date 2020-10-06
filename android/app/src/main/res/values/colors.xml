@@ -6,4 +6,5 @@
     <color name="colorOnSurface">#CC7CFD</color>
     <color name="colorError">#EB2049</color>
     <color name="colorSecondary">#877A7C</color>
+    <color name="colorTransparent">#00000000</color>
 </resources>
