@@ -1,4 +1,4 @@
-package com.fabirt.kpopify.data.services
+package com.fabirt.kpopify.core.services
 
 import android.app.Notification
 import android.app.PendingIntent
@@ -13,20 +13,24 @@ import androidx.core.app.RemoteInput
 import androidx.core.content.ContextCompat
 import com.fabirt.kpopify.MainActivity
 import com.fabirt.kpopify.R
+import com.fabirt.kpopify.core.constants.K
 import com.fabirt.kpopify.core.constants.K.NOTIFICATION_CHANNEL_ID
+import com.fabirt.kpopify.core.receivers.DummyReceiver
+import com.fabirt.kpopify.core.receivers.ReplyReceiver
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class MessagingService : FirebaseMessagingService() {
     companion object {
         private const val TAG = "MessagingService"
+        private const val notificationId = 2000
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.i(TAG, remoteMessage.toString())
         // Handle notification
-        val notification = buildNotification("Hello")
-        NotificationManagerCompat.from(applicationContext).notify(2000, notification)
+        val notification = buildNotification()
+        NotificationManagerCompat.from(applicationContext).notify(notificationId, notification)
     }
 
     override fun onNewToken(token: String) {
@@ -37,7 +41,7 @@ class MessagingService : FirebaseMessagingService() {
         Log.i(TAG, "Token copied!")
     }
 
-    private fun buildNotification(content: String): Notification {
+    private fun buildNotification(): Notification {
         // Create an explicit intent for an Activity in your app
         val intent = Intent(applicationContext, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -51,24 +55,35 @@ class MessagingService : FirebaseMessagingService() {
             0
         )
 
+        val replyIntent = Intent(applicationContext, ReplyReceiver::class.java).apply {
+            putExtra(K.EXTRA_ACTION_TEST, notificationId)
+        }
+        val replyPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, replyIntent, 0)
+
+        val dummyIntent = Intent(applicationContext, DummyReceiver::class.java).apply {
+            putExtra(K.EXTRA_ACTION_TEST, notificationId)
+        }
+        val dummyPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, dummyIntent, 0)
+
         val accentColor = ContextCompat.getColor(this, R.color.colorAccent)
 
         val dummyAction = NotificationCompat.Action.Builder(
             R.drawable.common_google_signin_btn_icon_dark,
             "Dummy button",
-            pendingIntent
+            dummyPendingIntent
         ).build()
 
-        val remoteInput = RemoteInput.Builder("KEY_TEXT_REPLY")
+        val remoteInput = RemoteInput.Builder(K.KEY_TEXT_REPLY)
             .setLabel("Message")
             .build()
 
         val replyAction = NotificationCompat.Action.Builder(
             R.drawable.common_google_signin_btn_icon_dark,
             "Reply",
-            pendingIntent
+            replyPendingIntent
         )
             .addRemoteInput(remoteInput)
+            .setAllowGeneratedReplies(true)
             .build()
 
         val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
@@ -80,8 +95,8 @@ class MessagingService : FirebaseMessagingService() {
                     R.mipmap.ic_launcher
                 )
             )
-            .setContentTitle("Kpopify")
-            .setContentText(content)
+            .setContentTitle("Hello there!")
+            .setContentText("This is a message to test notification actions")
             .setStyle(NotificationCompat.BigTextStyle())
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
