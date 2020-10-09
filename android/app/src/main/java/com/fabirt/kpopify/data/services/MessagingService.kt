@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.RemoteInput
 import androidx.core.content.ContextCompat
 import com.fabirt.kpopify.MainActivity
 import com.fabirt.kpopify.R
@@ -33,7 +34,7 @@ class MessagingService : FirebaseMessagingService() {
         val clipboard = ContextCompat.getSystemService(this, ClipboardManager::class.java)
         val clip = ClipData.newPlainText("RANDOM_UUID", token)
         clipboard?.setPrimaryClip(clip)
-        Log.i(TAG,"Token copied!")
+        Log.i(TAG, "Token copied!")
     }
 
     private fun buildNotification(content: String): Notification {
@@ -51,6 +52,25 @@ class MessagingService : FirebaseMessagingService() {
         )
 
         val accentColor = ContextCompat.getColor(this, R.color.colorAccent)
+
+        val dummyAction = NotificationCompat.Action.Builder(
+            R.drawable.common_google_signin_btn_icon_dark,
+            "Dummy button",
+            pendingIntent
+        ).build()
+
+        val remoteInput = RemoteInput.Builder("KEY_TEXT_REPLY")
+            .setLabel("Message")
+            .build()
+
+        val replyAction = NotificationCompat.Action.Builder(
+            R.drawable.common_google_signin_btn_icon_dark,
+            "Reply",
+            pendingIntent
+        )
+            .addRemoteInput(remoteInput)
+            .build()
+
         val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setColor(accentColor)
@@ -66,6 +86,8 @@ class MessagingService : FirebaseMessagingService() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
+            .addAction(replyAction)
+            .addAction(dummyAction)
 
         return notification.build()
     }
