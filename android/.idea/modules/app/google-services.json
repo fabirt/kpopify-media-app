@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "764259052392",
+    "firebase_url": "https://kpopify-f2491.firebaseio.com",
+    "project_id": "kpopify-f2491",
+    "storage_bucket": "kpopify-f2491.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764259052392:android:356d7cd557fbf0115744dd",
+        "android_client_info": {
+          "package_name": "com.fabirt.kpopify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "764259052392-sr8tru6l8ghke33utarjc0dir6au43gk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fabirt.kpopify",
+            "certificate_hash": "26dced470c5374a95fe22c802759b85a0abc5237"
+          }
+        },
+        {
+          "client_id": "764259052392-sl0t9m1klhgjn7k5ghj9nql4vh8vct11.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvEtFT3tiBSf38o8iQJE-SDjulNqJexIY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "764259052392-sl0t9m1klhgjn7k5ghj9nql4vh8vct11.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
