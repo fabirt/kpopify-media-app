@@ -18,7 +18,7 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
     companion object {
         private const val TAG = "PlaylistFragment"
         private val dummySongs = List(16) { index ->
-            Song(index, "Let's kill this love", "Blackpink", "", "")
+            Song(index, "Kill this love", "Blackpink", "", "")
         }
     }
 
