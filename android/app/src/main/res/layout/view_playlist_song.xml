@@ -14,7 +14,7 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         app:cardBackgroundColor="@color/colorOnSurfaceWithAlpha"
-        app:cardCornerRadius="22dp"
+        app:cardCornerRadius="26dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
