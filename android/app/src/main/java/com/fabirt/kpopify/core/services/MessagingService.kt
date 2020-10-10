@@ -23,14 +23,14 @@ import com.google.firebase.messaging.RemoteMessage
 class MessagingService : FirebaseMessagingService() {
     companion object {
         private const val TAG = "MessagingService"
-        private const val notificationId = 2000
+        private const val notificationId = 1000
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.i(TAG, remoteMessage.toString())
         // Handle notification
         val notification = buildNotification()
-        NotificationManagerCompat.from(applicationContext).notify(notificationId, notification)
+        NotificationManagerCompat.from(this).notify(notificationId, notification)
     }
 
     override fun onNewToken(token: String) {
@@ -43,27 +43,29 @@ class MessagingService : FirebaseMessagingService() {
 
     private fun buildNotification(): Notification {
         // Create an explicit intent for an Activity in your app
-        val intent = Intent(applicationContext, MainActivity::class.java).apply {
+        val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
             action = Intent.ACTION_MAIN
             addCategory(Intent.CATEGORY_LAUNCHER)
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(
-            applicationContext,
+            this,
             0,
             intent,
             0
         )
 
-        val replyIntent = Intent(applicationContext, ReplyReceiver::class.java).apply {
+        val replyIntent = Intent(this, ReplyReceiver::class.java).apply {
             putExtra(K.EXTRA_ACTION_TEST, notificationId)
         }
-        val replyPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, replyIntent, 0)
+        val replyPendingIntent = PendingIntent.getBroadcast(
+            this, 0, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val dummyIntent = Intent(applicationContext, DummyReceiver::class.java).apply {
+        val dummyIntent = Intent(this, DummyReceiver::class.java).apply {
             putExtra(K.EXTRA_ACTION_TEST, notificationId)
         }
-        val dummyPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, dummyIntent, 0)
+        val dummyPendingIntent = PendingIntent.getBroadcast(
+            this, 0, dummyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val accentColor = ContextCompat.getColor(this, R.color.colorAccent)
 
@@ -86,7 +88,7 @@ class MessagingService : FirebaseMessagingService() {
             .setAllowGeneratedReplies(true)
             .build()
 
-        val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setColor(accentColor)
             .setLargeIcon(

@@ -9,17 +9,17 @@ import com.fabirt.kpopify.core.constants.K
 
 class DummyReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        Toast.makeText(
-            context,
-            "Pretending to do something dummy",
-            Toast.LENGTH_LONG
-        ).show()
-
         val notificationId = intent!!.getIntExtra(K.EXTRA_ACTION_TEST, -1)
         if (notificationId > 0) {
             NotificationManagerCompat.from(context!!).apply {
                 cancel(notificationId)
             }
         }
+
+        Toast.makeText(
+            context,
+            "Pretending to do something dummy",
+            Toast.LENGTH_LONG
+        ).show()
     }
 }
