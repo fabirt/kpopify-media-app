@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
 import androidx.core.content.ContextCompat
-import com.fabirt.kpopify.MainActivity
+import com.fabirt.kpopify.presentation.MainActivity
 import com.fabirt.kpopify.R
 import com.fabirt.kpopify.core.constants.K
 import com.fabirt.kpopify.core.constants.K.NOTIFICATION_CHANNEL_ID

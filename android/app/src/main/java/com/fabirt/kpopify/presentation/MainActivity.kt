@@ -1,8 +1,9 @@
-package com.fabirt.kpopify
+package com.fabirt.kpopify.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.fabirt.kpopify.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
