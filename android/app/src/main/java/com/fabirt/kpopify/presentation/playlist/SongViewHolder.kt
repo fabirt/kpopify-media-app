@@ -17,9 +17,11 @@ class SongViewHolder(
         }
     }
 
-    fun bind(song: Song) {
+    fun bind(song: Song, dispatcher: PlaylistEventDispatcher) {
         binding.tvTitle.text = song.title
         binding.tvArtist.text = song.artist
-        binding.container.setOnClickListener {  }
+        binding.container.setOnClickListener {
+            dispatcher.onSongSelected(song)
+        }
     }
 }

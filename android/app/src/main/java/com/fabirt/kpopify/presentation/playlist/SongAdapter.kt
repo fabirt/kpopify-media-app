@@ -5,14 +5,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.fabirt.kpopify.domain.model.Song
 
-class SongAdapter : ListAdapter<Song, SongViewHolder>(SongDiffCallback) {
+class SongAdapter(
+    private val dispatcher: PlaylistEventDispatcher
+) : ListAdapter<Song, SongViewHolder>(SongDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         return SongViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), dispatcher)
     }
 
     object SongDiffCallback : DiffUtil.ItemCallback<Song>() {

@@ -9,5 +9,14 @@
         android:id="@+id/playlistFragment"
         android:name="com.fabirt.kpopify.presentation.playlist.PlaylistFragment"
         android:label="fragment_playlist"
-        tools:layout="@layout/fragment_playlist" />
+        tools:layout="@layout/fragment_playlist" >
+        <action
+            android:id="@+id/action_playlistFragment_to_songPlayerFragment"
+            app:destination="@id/songPlayerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/songPlayerFragment"
+        android:name="com.fabirt.kpopify.presentation.songplayer.SongPlayerFragment"
+        android:label="fragment_song_player"
+        tools:layout="@layout/fragment_song_player" />
 </navigation>
