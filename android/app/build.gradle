@@ -67,7 +67,14 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
     // Firebase
+    implementation 'com.google.firebase:firebase-firestore:21.7.1'
     implementation 'com.google.firebase:firebase-messaging:20.3.0'
+
+    // Firebase Storage KTX
+    implementation 'com.google.firebase:firebase-storage-ktx:19.2.0'
+
+    // Firebase Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
 
     // Glide image loading
     implementation "com.github.bumptech.glide:glide:$glide_version"
