@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.songplayer.SongPlayerFragment">
+    tools:context=".presentation.musicplayer.MusicPlayerFragment">
 
     <include
         android:id="@+id/included_player_controls"

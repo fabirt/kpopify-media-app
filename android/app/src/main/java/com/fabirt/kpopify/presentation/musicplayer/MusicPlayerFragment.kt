@@ -1,23 +1,23 @@
-package com.fabirt.kpopify.presentation.songplayer
+package com.fabirt.kpopify.presentation.musicplayer
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.fabirt.kpopify.databinding.FragmentSongPlayerBinding
+import com.fabirt.kpopify.databinding.FragmentMusicPlayerBinding
 
-class SongPlayerFragment : Fragment() {
+class MusicPlayerFragment : Fragment() {
 
-    private var _binding: FragmentSongPlayerBinding? = null
-    private val binding: FragmentSongPlayerBinding
+    private var _binding: FragmentMusicPlayerBinding? = null
+    private val binding: FragmentMusicPlayerBinding
         get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSongPlayerBinding.inflate(inflater, container, false)
+        _binding = FragmentMusicPlayerBinding.inflate(inflater, container, false)
         return binding.root
     }
 

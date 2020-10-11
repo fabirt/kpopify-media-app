@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/songPlayerFragment"
-        android:name="com.fabirt.kpopify.presentation.songplayer.SongPlayerFragment"
+        android:name="com.fabirt.kpopify.presentation.musicplayer.MusicPlayerFragment"
         android:label="fragment_song_player"
-        tools:layout="@layout/fragment_song_player" />
+        tools:layout="@layout/fragment_music_player" />
 </navigation>
