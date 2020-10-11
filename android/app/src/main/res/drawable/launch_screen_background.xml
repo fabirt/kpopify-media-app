@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/colorPrimary" />
+    <item
+        android:width="80dp"
+        android:height="80dp"
+        android:gravity="center">
+        <shape>
+            <corners android:radius="32dp" />
+            <gradient
+                android:centerColor="@color/colorAccent"
+                android:endColor="@color/colorOnSurface"
+                android:startColor="@color/colorOnSurface"
+                android:type="sweep" />
+        </shape>
+    </item>
+
+    <item
+        android:width="80dp"
+        android:height="80dp"
+        android:drawable="@drawable/ic_launcher_foreground"
+        android:gravity="center" />
+</layer-list>
