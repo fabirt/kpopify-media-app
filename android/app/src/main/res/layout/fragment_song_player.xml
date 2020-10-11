@@ -8,6 +8,15 @@
     tools:context=".presentation.songplayer.SongPlayerFragment">
 
     <include
+        android:id="@+id/included_player_controls"
+        layout="@layout/view_player_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@id/included_bottom_view" />
+
+    <include
         android:id="@+id/included_bottom_view"
         layout="@layout/bottom_view_player"
         android:layout_width="match_parent"
