@@ -81,4 +81,5 @@ dependencies {
 
     // ExoPlayer
     implementation "com.google.android.exoplayer:exoplayer:$exo_player_version"
+    implementation "com.google.android.exoplayer:extension-mediasession:$exo_player_version"
 }
