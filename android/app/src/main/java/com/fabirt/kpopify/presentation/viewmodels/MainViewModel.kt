@@ -42,8 +42,7 @@ class MainViewModel @ViewModelInject constructor(
                             it.description.title.toString(),
                             it.description.subtitle.toString(),
                             it.description.iconUri.toString(),
-                            it.description.mediaUri.toString(),
-                            "", ""
+                            it.description.mediaUri.toString()
                         )
                     }
                     _songs.postValue(Resource.Success(items))

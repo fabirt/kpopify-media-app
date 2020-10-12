@@ -34,7 +34,7 @@ class MusicPlayerNotificationManager(
             DescriptionAdapter(mediaController),
             notificationListener
         ).apply {
-            setSmallIcon(R.drawable.ic_music_note)
+            setSmallIcon(R.drawable.ic_kpopify_icon)
             setMediaSessionToken(sessionToken)
         }
     }

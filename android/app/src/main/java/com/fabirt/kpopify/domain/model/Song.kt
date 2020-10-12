@@ -5,7 +5,5 @@ data class Song(
     val title: String,
     val artist: String,
     val imageUrl: String,
-    val mediaUrl: String,
-    val primaryColor: String,
-    val secondaryColor: String
+    val mediaUrl: String
 )

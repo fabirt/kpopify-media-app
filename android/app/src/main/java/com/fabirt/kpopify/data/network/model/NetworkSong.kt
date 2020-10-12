@@ -7,9 +7,7 @@ data class NetworkSong(
     val title: String,
     val artist: String,
     val imageUrl: String,
-    val mediaUrl: String,
-    val primaryColor: String,
-    val secondaryColor: String
+    val mediaUrl: String
 ) {
     companion object {
         fun fromMap(data: Map<String, Any?>): NetworkSong {
@@ -18,14 +16,12 @@ data class NetworkSong(
                 title = data["title"] as String,
                 artist = data["artist"] as String,
                 imageUrl = data["image_url"] as String,
-                mediaUrl = data["media_url"] as String,
-                primaryColor = data["primary_color"] as String,
-                secondaryColor = data["secondary_color"] as String
+                mediaUrl = data["media_url"] as String
             )
         }
     }
 
     fun asDomainModel(): Song {
-        return Song(mediaId, title, artist, imageUrl, mediaUrl, primaryColor, secondaryColor)
+        return Song(mediaId, title, artist, imageUrl, mediaUrl)
     }
 }
