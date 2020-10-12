@@ -10,6 +10,8 @@ object K {
 
     const val MEDIA_ROOT_ID = "MEDIA_ROOT_ID"
 
+    const val NETWORK_ERROR_EVENT = "NETWORK_ERROR_EVENT"
+
     // Notification actions testing
     const val NOTIFICATION_CHANNEL_ID = "KPOPIFY_NOTIFICATION_CHANNEL"
     const val KEY_TEXT_REPLY = "KEY_TEXT_REPLY"

@@ -107,7 +107,8 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
                             isPlayerInitialized = true
                         }
                     } else {
-                        result.sendError(null)
+                        mediaSession.sendSessionEvent(K.NETWORK_ERROR_EVENT, null)
+                        result.sendResult(null)
                     }
                 }
                 if (!resultsSent) {
