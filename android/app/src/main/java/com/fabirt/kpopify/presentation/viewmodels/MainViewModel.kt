@@ -19,7 +19,7 @@ class MainViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     private val _songs = MutableLiveData<Resource<List<Song>>>()
-    val song: LiveData<Resource<List<Song>>> get() = _songs
+    val songs: LiveData<Resource<List<Song>>> get() = _songs
 
     val isConnected = serviceConnection.isConnected
     val networkError = serviceConnection.networkError

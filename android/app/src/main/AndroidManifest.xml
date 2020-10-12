@@ -26,7 +26,15 @@
         </activity>
 
         <service
-            android:name="com.fabirt.kpopify.core.services.MessagingService"
+            android:name=".core.services.MusicPlayerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserServic" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".core.services.MessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

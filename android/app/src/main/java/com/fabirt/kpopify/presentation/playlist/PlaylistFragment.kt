@@ -5,24 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.fabirt.kpopify.data.network.RemoteMusicDatabase
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import com.fabirt.kpopify.core.util.Resource
 import com.fabirt.kpopify.databinding.FragmentPlaylistBinding
 import com.fabirt.kpopify.domain.model.Song
+import com.fabirt.kpopify.presentation.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
+
     private lateinit var adapter: SongAdapter
     private var _binding: FragmentPlaylistBinding? = null
     private val binding: FragmentPlaylistBinding
         get() = _binding!!
 
-    @Inject
-    lateinit var remoteMusicDatabase: RemoteMusicDatabase
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     companion object {
         private const val TAG = "PlaylistFragment"
@@ -31,11 +30,6 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = SongAdapter(this)
-
-        lifecycleScope.launch {
-            val songs = remoteMusicDatabase.getAllSongs()
-            adapter.submitList(songs)
-        }
     }
 
     override fun onCreateView(
@@ -49,6 +43,7 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvPlaylist.adapter = adapter
+        subscribeToObservers()
     }
 
     override fun onDestroyView() {
@@ -57,8 +52,18 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
     }
 
     override fun onSongSelected(song: Song) {
-        findNavController().navigate(
-            PlaylistFragmentDirections.actionPlaylistFragmentToSongPlayerFragment()
-        )
+        mainViewModel.playOrToggleSong(song)
+    }
+
+    private fun subscribeToObservers() {
+        mainViewModel.songs.observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Resource.Success -> {
+                    adapter.submitList(result.data)
+                }
+                is Resource.Error -> Unit
+                Resource.Loading -> Unit
+            }
+        })
     }
 }
