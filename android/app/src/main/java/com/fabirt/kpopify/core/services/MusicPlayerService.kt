@@ -1,20 +1,19 @@
 package com.fabirt.kpopify.core.services
 
 import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
+import com.fabirt.kpopify.core.constants.K
 import com.fabirt.kpopify.core.exoplayer.*
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -37,16 +36,28 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
 
     private lateinit var musicPlayerNotificationManager: MusicPlayerNotificationManager
 
-    var isForegroundService: Boolean = false
+    private lateinit var musicPlayerEventListener: MusicPlayerEventListener
 
     private var currentPlayingSong: MediaMetadataCompat? = null
 
+    private var isPlayerInitialized = false
+
+    var isForegroundService: Boolean = false
+
     companion object {
         private const val TAG = "MusicPlayerService"
+
+        var currentSongDuration: Long = 0L
+            private set
     }
 
     override fun onCreate() {
         super.onCreate()
+
+        serviceScope.launch {
+            musicSource.requestMediaData()
+        }
+
         val activityPendingIntent = packageManager.getLaunchIntentForPackage(packageName)?.let {
             PendingIntent.getActivity(this, 0, it, PendingIntent.FLAG_UPDATE_CURRENT)
         }
@@ -60,9 +71,10 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
             currentPlayingSong = mediaMetadata
             preparePlayer(musicSource.mediaMetadataSongs, mediaMetadata, true)
         }
-        mediaSessionConnector = MediaSessionConnector(mediaSession).also {
-            it.setPlaybackPreparer(musicPlaybackPreparer)
-            it.setPlayer(exoPlayer)
+        mediaSessionConnector = MediaSessionConnector(mediaSession).apply {
+            setPlaybackPreparer(musicPlaybackPreparer)
+            setQueueNavigator(MusicPlayerQueueNavigator(mediaSession, musicSource))
+            setPlayer(exoPlayer)
         }
 
         this.sessionToken = mediaSession.sessionToken
@@ -72,10 +84,11 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
             mediaSession.sessionToken,
             MusicPlayerNotificationListener(this)
         ) {
-            // TODO
+            currentSongDuration = exoPlayer.duration
         }
 
-        exoPlayer.addListener(MusicPlayerEventListener(this))
+        musicPlayerEventListener = MusicPlayerEventListener(this)
+        exoPlayer.addListener(musicPlayerEventListener)
         musicPlayerNotificationManager.showNotification(exoPlayer)
     }
 
@@ -83,7 +96,26 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
         parentId: String,
         result: Result<MutableList<MediaBrowserCompat.MediaItem>>
     ) {
-        TODO("Not yet implemented")
+        when (parentId) {
+            K.MEDIA_ROOT_ID -> {
+                val resultsSent = musicSource.whenReady { isInitialized ->
+                    if (isInitialized) {
+                        result.sendResult(musicSource.asMediaItems())
+                        if (!isPlayerInitialized && musicSource.mediaMetadataSongs.isNotEmpty()) {
+                            val mediaSongs = musicSource.mediaMetadataSongs
+                            preparePlayer(mediaSongs, mediaSongs.first(), false)
+                            isPlayerInitialized = true
+                        }
+                    } else {
+                        result.sendError(null)
+                    }
+                }
+                if (!resultsSent) {
+                    result.detach()
+                }
+            }
+            else -> Unit
+        }
     }
 
     override fun onGetRoot(
@@ -91,12 +123,19 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
         clientUid: Int,
         rootHints: Bundle?
     ): BrowserRoot? {
-        TODO("Not yet implemented")
+        return BrowserRoot(K.MEDIA_ROOT_ID, null)
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+        exoPlayer.stop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         serviceScope.cancel()
+        exoPlayer.removeListener(musicPlayerEventListener)
+        exoPlayer.release()
     }
 
     private fun preparePlayer(

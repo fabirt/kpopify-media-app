@@ -72,7 +72,7 @@ class MusicSource @Inject constructor(
             .setMediaUri(metadata.description.mediaUri)
             .build()
         MediaBrowserCompat.MediaItem(description, MediaBrowserCompat.MediaItem.FLAG_PLAYABLE)
-    }
+    }.toMutableList()
 
     fun whenReady(listener: OnReadyListener): Boolean {
         return if (state == MusicSourceState.CREATED || state == MusicSourceState.INITIALIZING) {
