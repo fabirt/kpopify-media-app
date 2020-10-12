@@ -134,7 +134,8 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)
-        exoPlayer.stop()
+        // Here you can stop the player when he user remove the application's task
+        // exoPlayer.stop()
     }
 
     override fun onDestroy() {
