@@ -4,6 +4,10 @@ object K {
     /** Firebase Firestore playlist collection reference. */
     const val PLAYLIST_COLLECTION_NAME = "playlist"
 
+    const val PLAYER_NOTIFICATION_CHANNEL_ID = "MUSIC_PLAYBACK"
+
+    const val PLAYER_NOTIFICATION_ID = 115234045
+
     // Notification actions testing
     const val NOTIFICATION_CHANNEL_ID = "KPOPIFY_NOTIFICATION_CHANNEL"
     const val KEY_TEXT_REPLY = "KEY_TEXT_REPLY"

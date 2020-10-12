@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
+import com.fabirt.kpopify.core.exoplayer.MusicPlayerNotificationListener
+import com.fabirt.kpopify.core.exoplayer.MusicPlayerNotificationManager
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -30,6 +32,10 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
     private lateinit var mediaSession: MediaSessionCompat
     private lateinit var mediaSessionConnector: MediaSessionConnector
 
+    private lateinit var musicPlayerNotificationManager: MusicPlayerNotificationManager
+
+    var isForegroundService: Boolean = false
+
     companion object {
         private const val TAG = "MusicPlayerService"
     }
@@ -50,6 +56,14 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
         }
 
         this.sessionToken = mediaSession.sessionToken
+
+        musicPlayerNotificationManager = MusicPlayerNotificationManager(
+            this,
+            mediaSession.sessionToken,
+            MusicPlayerNotificationListener(this)
+        ) {
+            // TODO
+        }
     }
 
     override fun onLoadChildren(
