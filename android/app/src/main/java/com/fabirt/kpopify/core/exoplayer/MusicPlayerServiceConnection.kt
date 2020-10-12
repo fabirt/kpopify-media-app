@@ -41,7 +41,9 @@ class MusicPlayerServiceConnection(context: Context) {
             ComponentName(context, MusicPlayerService::class.java),
             mediaBrowserConnectionCallback,
             null
-        ).apply { connect() }
+        ).apply {
+            connect()
+        }
 
     fun subscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {
         mediaBrowser.subscribe(parentId, callback)
