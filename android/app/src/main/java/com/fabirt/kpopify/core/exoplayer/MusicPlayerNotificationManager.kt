@@ -26,7 +26,20 @@ class MusicPlayerNotificationManager(
 
     init {
         val mediaController = MediaControllerCompat(context, sessionToken)
-        notificationManager = PlayerNotificationManager.createWithNotificationChannel(
+        notificationManager =
+            createNotificationManger(mediaController, sessionToken, notificationListener)
+    }
+
+    fun showNotification(player: Player) {
+        notificationManager.setPlayer(player)
+    }
+
+    private fun createNotificationManger(
+        mediaController: MediaControllerCompat,
+        sessionToken: MediaSessionCompat.Token,
+        notificationListener: PlayerNotificationManager.NotificationListener
+    ): PlayerNotificationManager {
+        return PlayerNotificationManager.createWithNotificationChannel(
             context,
             K.PLAYER_NOTIFICATION_CHANNEL_ID,
             R.string.player_notification_channel_name,
@@ -37,11 +50,10 @@ class MusicPlayerNotificationManager(
         ).apply {
             setSmallIcon(R.drawable.ic_kpopify_icon)
             setMediaSessionToken(sessionToken)
+            setRewindIncrementMs(0L)
+            setFastForwardIncrementMs(0L)
+            setUseStopAction(true)
         }
-    }
-
-    fun showNotification(player: Player) {
-        notificationManager.setPlayer(player)
     }
 
     private inner class DescriptionAdapter(
