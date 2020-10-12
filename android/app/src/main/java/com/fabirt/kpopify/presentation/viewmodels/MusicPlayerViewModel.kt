@@ -14,7 +14,7 @@ import com.fabirt.kpopify.core.exoplayer.isPrepared
 import com.fabirt.kpopify.core.util.Resource
 import com.fabirt.kpopify.domain.model.Song
 
-class MainViewModel @ViewModelInject constructor(
+class MusicPlayerViewModel @ViewModelInject constructor(
     private val serviceConnection: MusicPlayerServiceConnection
 ) : ViewModel() {
 

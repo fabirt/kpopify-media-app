@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import com.fabirt.kpopify.core.util.Resource
 import com.fabirt.kpopify.databinding.FragmentPlaylistBinding
 import com.fabirt.kpopify.domain.model.Song
-import com.fabirt.kpopify.presentation.viewmodels.MainViewModel
+import com.fabirt.kpopify.presentation.viewmodels.MusicPlayerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +21,7 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
     private val binding: FragmentPlaylistBinding
         get() = _binding!!
 
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val playerViewModel: MusicPlayerViewModel by activityViewModels()
 
     companion object {
         private const val TAG = "PlaylistFragment"
@@ -52,11 +52,11 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
     }
 
     override fun onSongSelected(song: Song) {
-        mainViewModel.playOrToggleSong(song)
+        playerViewModel.playOrToggleSong(song)
     }
 
     private fun subscribeToObservers() {
-        mainViewModel.songs.observe(viewLifecycleOwner, Observer { result ->
+        playerViewModel.songs.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Resource.Success -> {
                     adapter.submitList(result.data)

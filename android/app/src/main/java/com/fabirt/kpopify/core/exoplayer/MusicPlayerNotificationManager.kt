@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.fabirt.kpopify.core.constants.K
 import com.google.android.exoplayer2.Player
@@ -55,6 +56,7 @@ class MusicPlayerNotificationManager(
         }
 
         override fun getCurrentContentTitle(player: Player): CharSequence {
+            newSongCallback()
             return mediaController.metadata.description.title.toString()
         }
 
@@ -64,6 +66,7 @@ class MusicPlayerNotificationManager(
         ): Bitmap? {
             Glide.with(context).asBitmap()
                 .load(mediaController.metadata.description.iconUri)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(object : CustomTarget<Bitmap>() {
                     override fun onLoadCleared(placeholder: Drawable?) = Unit
 
