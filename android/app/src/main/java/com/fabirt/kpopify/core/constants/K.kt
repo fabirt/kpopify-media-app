@@ -12,6 +12,8 @@ object K {
 
     const val NETWORK_ERROR_EVENT = "NETWORK_ERROR_EVENT"
 
+    const val START_MEDIA_PLAYBACK_ACTION = "START_MEDIA_PLAYBACK_ACTION"
+
     // Notification actions testing
     const val NOTIFICATION_CHANNEL_ID = "KPOPIFY_NOTIFICATION_CHANNEL"
     const val KEY_TEXT_REPLY = "KEY_TEXT_REPLY"

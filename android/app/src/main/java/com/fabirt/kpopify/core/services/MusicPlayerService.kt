@@ -90,7 +90,17 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
 
         musicPlayerEventListener = MusicPlayerEventListener(this)
         exoPlayer.addListener(musicPlayerEventListener)
-        musicPlayerNotificationManager.showNotification(exoPlayer)
+    }
+
+
+    override fun onCustomAction(action: String, extras: Bundle?, result: Result<Bundle>) {
+        super.onCustomAction(action, extras, result)
+        when (action) {
+            K.START_MEDIA_PLAYBACK_ACTION -> musicPlayerNotificationManager.showNotification(
+                exoPlayer
+            )
+            else -> Unit
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

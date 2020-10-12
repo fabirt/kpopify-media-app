@@ -63,6 +63,7 @@ class MusicPlayerViewModel @ViewModelInject constructor(
     }
 
     fun playOrToggleSong(song: Song, toggle: Boolean = false) {
+        serviceConnection.startPlaybackNotification()
         val isPrepared = playbackState.value?.isPrepared ?: false
         val currentMediaId =
             currentPlayingSong.value?.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID)

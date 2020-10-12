@@ -45,6 +45,10 @@ class MusicPlayerServiceConnection(context: Context) {
             connect()
         }
 
+    fun startPlaybackNotification() {
+        mediaBrowser.sendCustomAction(K.START_MEDIA_PLAYBACK_ACTION, null, null)
+    }
+
     fun subscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {
         mediaBrowser.subscribe(parentId, callback)
     }
