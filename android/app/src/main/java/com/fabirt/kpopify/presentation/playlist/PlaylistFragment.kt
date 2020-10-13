@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.fabirt.kpopify.R
 import com.fabirt.kpopify.core.exoplayer.isPlaying
@@ -91,13 +92,17 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
         val title = getString(R.string.current_song_title, song.title, song.artist)
         binding.includedCurrentSong.tvTitle.text = title
         binding.includedCurrentSong.container.setOnClickListener {
-            val action =
-                PlaylistFragmentDirections.actionPlaylistFragmentToSongPlayerFragment()
-            findNavController().navigate(action)
+            openMusicPlayerFragment(it)
         }
         bindNetworkImage(binding.includedCurrentSong.ivSong, song.imageUrl)
         binding.includedCurrentSong.btnPlayPause.setOnClickListener {
             playerViewModel.playOrToggleSong(song, true)
         }
+    }
+
+    private fun openMusicPlayerFragment(view: View) {
+        val action = PlaylistFragmentDirections.actionPlaylistFragmentToSongPlayerFragment()
+        val extras = FragmentNavigatorExtras(view to "song_window")
+        findNavController().navigate(action, extras)
     }
 }

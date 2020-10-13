@@ -5,13 +5,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import com.fabirt.kpopify.R
+import com.fabirt.kpopify.core.exoplayer.isPlaying
+import com.fabirt.kpopify.core.exoplayer.toSong
+import com.fabirt.kpopify.core.util.bindNetworkImage
 import com.fabirt.kpopify.databinding.FragmentMusicPlayerBinding
+import com.fabirt.kpopify.presentation.viewmodels.MusicPlayerViewModel
+import com.google.android.material.transition.MaterialContainerTransform
 
 class MusicPlayerFragment : Fragment() {
+
+    private val playerViewModel: MusicPlayerViewModel by activityViewModels()
 
     private var _binding: FragmentMusicPlayerBinding? = null
     private val binding: FragmentMusicPlayerBinding
         get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        configureTransitions()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,8 +36,41 @@ class MusicPlayerFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        subscribeToObservers()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun subscribeToObservers() {
+        playerViewModel.currentPlayingSong.observe(viewLifecycleOwner, Observer { mediaItem ->
+            mediaItem?.description?.mediaId?.let {
+                val song = mediaItem.toSong()
+                binding.tvTitle.text = song.title
+                binding.tvArtist.text = song.artist
+                bindNetworkImage(binding.ivSong, song.imageUrl)
+            }
+        })
+
+        playerViewModel.playbackState.observe(viewLifecycleOwner, Observer { playbackState ->
+            val iconResource =
+                if (playbackState?.isPlaying == true) R.drawable.ic_pause else R.drawable.ic_play
+            binding.includedPlayerControls.fabPlayPause.setImageResource(iconResource)
+        })
+    }
+
+    private fun configureTransitions() {
+        val color = requireContext().getColor(R.color.colorPrimary)
+        val transition = MaterialContainerTransform().apply {
+            duration = 300L
+            containerColor = color
+            //drawingViewId = R.id.mainNavHostFragment
+        }
+        sharedElementEnterTransition = transition
+        sharedElementReturnTransition = transition
     }
 }
