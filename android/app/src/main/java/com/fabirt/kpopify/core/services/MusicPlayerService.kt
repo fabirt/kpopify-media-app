@@ -117,8 +117,9 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
                     if (isInitialized) {
                         result.sendResult(musicSource.asMediaItems())
                         if (!isPlayerInitialized && musicSource.mediaMetadataSongs.isNotEmpty()) {
-                            val mediaSongs = musicSource.mediaMetadataSongs
-                            preparePlayer(mediaSongs, mediaSongs.first(), false)
+                            // Uncomment this to prepare the player when children are loaded
+                            // val mediaSongs = musicSource.mediaMetadataSongs
+                            // preparePlayer(mediaSongs, mediaSongs.first(), false)
                             isPlayerInitialized = true
                         }
                     } else {
