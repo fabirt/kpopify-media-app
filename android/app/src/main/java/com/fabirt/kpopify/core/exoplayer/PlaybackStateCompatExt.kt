@@ -20,7 +20,7 @@ inline val PlaybackStateCompat.isPlayEnabled
 
 fun MediaMetadataCompat.toSong(): Song {
     return Song(
-        description.mediaId!!,
+        description.mediaId.toString(),
         description.title.toString(),
         description.subtitle.toString(),
         description.iconUri.toString(),

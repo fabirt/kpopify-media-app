@@ -5,9 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.fabirt.kpopify.R
+import com.fabirt.kpopify.core.exoplayer.isPlaying
+import com.fabirt.kpopify.core.exoplayer.toSong
 import com.fabirt.kpopify.core.util.Resource
+import com.fabirt.kpopify.core.util.bindNetworkImage
 import com.fabirt.kpopify.databinding.FragmentPlaylistBinding
 import com.fabirt.kpopify.domain.model.Song
 import com.fabirt.kpopify.presentation.viewmodels.MusicPlayerViewModel
@@ -65,5 +71,33 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
                 Resource.Loading -> Unit
             }
         })
+
+        playerViewModel.currentPlayingSong.observe(viewLifecycleOwner, Observer { mediaItem ->
+            binding.includedCurrentSong.container.isVisible =
+                mediaItem?.description?.mediaId != null
+            mediaItem?.description?.mediaId?.let {
+                displayCurrentSong(mediaItem.toSong())
+            }
+        })
+
+        playerViewModel.playbackState.observe(viewLifecycleOwner, Observer { playbackState ->
+            val iconResource =
+                if (playbackState?.isPlaying == true) R.drawable.ic_pause else R.drawable.ic_play
+            binding.includedCurrentSong.btnPlayPause.setImageResource(iconResource)
+        })
+    }
+
+    private fun displayCurrentSong(song: Song) {
+        val title = getString(R.string.current_song_title, song.title, song.artist)
+        binding.includedCurrentSong.tvTitle.text = title
+        binding.includedCurrentSong.container.setOnClickListener {
+            val action =
+                PlaylistFragmentDirections.actionPlaylistFragmentToSongPlayerFragment()
+            findNavController().navigate(action)
+        }
+        bindNetworkImage(binding.includedCurrentSong.ivSong, song.imageUrl)
+        binding.includedCurrentSong.btnPlayPause.setOnClickListener {
+            playerViewModel.playOrToggleSong(song, true)
+        }
     }
 }

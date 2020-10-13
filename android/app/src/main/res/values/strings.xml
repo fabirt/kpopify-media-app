@@ -3,4 +3,5 @@
     <string name="playlist_title">K-pop Mix</string>
     <string name="player_notification_channel_name">Playback</string>
     <string name="player_notification_channel_description">Playback notification for Kpopify</string>
+    <string name="current_song_title">%1$s • %2$s</string>
 </resources>

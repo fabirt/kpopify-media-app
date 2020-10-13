@@ -11,7 +11,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/top_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="256dp"
+        android:layout_height="240dp"
         android:fitsSystemWindows="true"
         app:liftOnScroll="true">
 
@@ -75,5 +75,16 @@
         app:rippleColor="@color/rippleOnSurface"
         app:srcCompat="@drawable/ic_play"
         app:tint="@android:color/white" />
+
+    <include
+        android:id="@+id/included_current_song"
+        layout="@layout/view_current_song"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
+        tools:visibility="visible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
