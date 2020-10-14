@@ -96,8 +96,9 @@ class MusicPlayerFragment : Fragment() {
 
     private fun configureTransitions() {
         val color = requireContext().getColor(R.color.colorPrimary)
+        val transitionDuration = resources.getInteger(R.integer.nav_transition_duration)
         val transition = MaterialContainerTransform().apply {
-            duration = 300L
+            duration = transitionDuration.toLong()
             containerColor = color
             drawingViewId = R.id.nav_host_fragment
         }

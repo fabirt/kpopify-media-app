@@ -18,10 +18,14 @@ import com.fabirt.kpopify.core.util.bindNetworkImage
 import com.fabirt.kpopify.databinding.FragmentPlaylistBinding
 import com.fabirt.kpopify.domain.model.Song
 import com.fabirt.kpopify.presentation.viewmodels.MusicPlayerViewModel
+import com.google.android.material.transition.Hold
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
+    companion object {
+        private const val TAG = "PlaylistFragment"
+    }
 
     private lateinit var adapter: SongAdapter
     private var _binding: FragmentPlaylistBinding? = null
@@ -30,12 +34,14 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
 
     private val playerViewModel: MusicPlayerViewModel by activityViewModels()
 
-    companion object {
-        private const val TAG = "PlaylistFragment"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val transitionDuration = resources.getInteger(R.integer.nav_transition_duration)
+        exitTransition = Hold().apply {
+            duration = transitionDuration.toLong()
+        }
+
         adapter = SongAdapter(this)
     }
 
