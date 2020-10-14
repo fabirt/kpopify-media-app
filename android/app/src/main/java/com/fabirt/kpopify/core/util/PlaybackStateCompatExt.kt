@@ -1,4 +1,4 @@
-package com.fabirt.kpopify.core.exoplayer
+package com.fabirt.kpopify.core.util
 
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat
@@ -17,13 +17,3 @@ inline val PlaybackStateCompat.isPlayEnabled
     get() = actions and PlaybackStateCompat.ACTION_PLAY != 0L ||
             (actions and PlaybackStateCompat.ACTION_PLAY_PAUSE != 0L &&
                     state == PlaybackStateCompat.STATE_PAUSED)
-
-fun MediaMetadataCompat.toSong(): Song {
-    return Song(
-        description.mediaId.toString(),
-        description.title.toString(),
-        description.subtitle.toString(),
-        description.iconUri.toString(),
-        description.mediaUri.toString()
-    )
-}

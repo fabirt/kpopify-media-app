@@ -9,10 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fabirt.kpopify.core.constants.K
 import com.fabirt.kpopify.core.exoplayer.MusicPlayerServiceConnection
-import com.fabirt.kpopify.core.exoplayer.isPlayEnabled
-import com.fabirt.kpopify.core.exoplayer.isPlaying
-import com.fabirt.kpopify.core.exoplayer.isPrepared
-import com.fabirt.kpopify.core.util.Resource
+import com.fabirt.kpopify.core.util.*
 import com.fabirt.kpopify.domain.model.Song
 
 class MusicPlayerViewModel @ViewModelInject constructor(
@@ -40,15 +37,7 @@ class MusicPlayerViewModel @ViewModelInject constructor(
                     children: MutableList<MediaBrowserCompat.MediaItem>
                 ) {
                     super.onChildrenLoaded(parentId, children)
-                    val items = children.map {
-                        Song(
-                            it.mediaId!!,
-                            it.description.title.toString(),
-                            it.description.subtitle.toString(),
-                            it.description.iconUri.toString(),
-                            it.description.mediaUri.toString()
-                        )
-                    }
+                    val items = children.map { it.toSong() }
                     _songs.postValue(Resource.Success(items))
                 }
             })

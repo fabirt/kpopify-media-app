@@ -11,8 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.fabirt.kpopify.R
-import com.fabirt.kpopify.core.exoplayer.isPlaying
-import com.fabirt.kpopify.core.exoplayer.toSong
+import com.fabirt.kpopify.core.util.isPlaying
+import com.fabirt.kpopify.core.util.toSong
 import com.fabirt.kpopify.core.util.Resource
 import com.fabirt.kpopify.core.util.bindNetworkImage
 import com.fabirt.kpopify.databinding.FragmentPlaylistBinding
