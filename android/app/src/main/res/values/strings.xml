@@ -4,4 +4,6 @@
     <string name="player_notification_channel_name">Playback</string>
     <string name="player_notification_channel_description">Playback notification for Kpopify</string>
     <string name="current_song_title">%1$s • %2$s</string>
+    <string name="try_again">Try again</string>
+    <string name="empty_playlist_reason">Sorry, we couldn\'t find the best K-pop mix for you. Please check your Internet connection.</string>
 </resources>

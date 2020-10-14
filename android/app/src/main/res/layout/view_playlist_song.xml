@@ -13,7 +13,7 @@
         android:id="@+id/music_note_container"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        app:cardBackgroundColor="@color/colorOnSurfaceWithAlpha"
+        app:cardBackgroundColor="@color/colorSurface"
         app:cardCornerRadius="26dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

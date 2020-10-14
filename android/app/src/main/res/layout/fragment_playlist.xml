@@ -87,4 +87,18 @@
         android:visibility="invisible"
         tools:visibility="visible" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <include
+        android:id="@+id/included_empty_view"
+        layout="@layout/view_empty_playlist"
+        android:visibility="gone"
+        tools:visibility="gone" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

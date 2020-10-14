@@ -51,6 +51,9 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
         super.onViewCreated(view, savedInstanceState)
         binding.rvPlaylist.adapter = adapter
         subscribeToObservers()
+        binding.includedEmptyView.btnEmpty.setOnClickListener {
+
+        }
     }
 
     override fun onDestroyView() {
@@ -66,16 +69,34 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
         playerViewModel.songs.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Resource.Success -> {
+                    binding.progressBar.isVisible = false
+                    binding.topAppBar.isVisible = true
+                    binding.rvPlaylist.isVisible = true
+                    binding.fabPlay.isVisible = true
+                    binding.includedEmptyView.root.isVisible = false
                     adapter.submitList(result.data)
                 }
-                is Resource.Error -> Unit
-                Resource.Loading -> Unit
+                is Resource.Error -> {
+                    binding.progressBar.isVisible = false
+                    binding.topAppBar.isVisible = false
+                    binding.rvPlaylist.isVisible = false
+                    binding.fabPlay.isVisible = false
+                    binding.includedEmptyView.root.isVisible = true
+                }
+                Resource.Loading -> {
+                    binding.progressBar.isVisible = true
+                    binding.topAppBar.isVisible = false
+                    binding.rvPlaylist.isVisible = false
+                    binding.fabPlay.isVisible = false
+                    binding.includedEmptyView.root.isVisible = false
+                }
             }
         })
 
         playerViewModel.currentPlayingSong.observe(viewLifecycleOwner, Observer { mediaItem ->
             binding.includedCurrentSong.container.isVisible =
                 mediaItem?.description?.mediaId != null
+
             mediaItem?.description?.mediaId?.let {
                 displayCurrentSong(mediaItem.toSong())
             }
@@ -84,6 +105,7 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
         playerViewModel.playbackState.observe(viewLifecycleOwner, Observer { playbackState ->
             val iconResource =
                 if (playbackState?.isPlaying == true) R.drawable.ic_pause else R.drawable.ic_play
+
             binding.includedCurrentSong.btnPlayPause.setImageResource(iconResource)
         })
     }

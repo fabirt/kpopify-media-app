@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#070210</color>
     <color name="colorAccent">#E125B0</color>
     <color name="colorOnSurface">#CC7CFD</color>
-    <color name="colorOnSurfaceWithAlpha">#22CC7CFD</color>
+    <color name="colorSurface">#512B66</color>
     <color name="colorError">#EB2049</color>
     <color name="colorSecondary">#877A7C</color>
     <color name="colorTransparent">#00000000</color>
