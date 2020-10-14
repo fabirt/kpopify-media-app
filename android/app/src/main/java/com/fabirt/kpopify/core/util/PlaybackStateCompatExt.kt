@@ -1,8 +1,6 @@
 package com.fabirt.kpopify.core.util
 
-import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import com.fabirt.kpopify.domain.model.Song
 
 inline val PlaybackStateCompat.isPrepared
     get() = state == PlaybackStateCompat.STATE_BUFFERING ||
