@@ -38,12 +38,31 @@ class MusicPlayerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setOnClickActions()
         subscribeToObservers()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setOnClickActions() {
+        binding.includedPlayerControls.fabPlayPause.setOnClickListener {
+            playerViewModel.playOrPauseCurrentSong()
+        }
+
+        binding.includedPlayerControls.ivPrevious.setOnClickListener {
+            playerViewModel.skipToPreviousSong()
+        }
+
+        binding.includedPlayerControls.ivNext.setOnClickListener {
+            playerViewModel.skipToNextSong()
+        }
+
+        binding.includedPlayerControls.ivReplay.setOnClickListener {
+
+        }
     }
 
     private fun subscribeToObservers() {

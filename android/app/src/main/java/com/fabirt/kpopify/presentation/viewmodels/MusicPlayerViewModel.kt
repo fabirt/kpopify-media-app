@@ -80,6 +80,16 @@ class MusicPlayerViewModel @ViewModelInject constructor(
         }
     }
 
+    fun playOrPauseCurrentSong() {
+        playbackState.value?.let { state ->
+            when {
+                state.isPlaying -> serviceConnection.transportControls.pause()
+                state.isPlayEnabled -> serviceConnection.transportControls.play()
+                else -> Unit
+            }
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         serviceConnection.unsubscribe(

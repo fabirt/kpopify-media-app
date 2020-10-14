@@ -15,7 +15,7 @@
         android:contentDescription="@null"
         android:paddingVertical="8dp"
         android:src="@drawable/ic_replay"
-        app:tint="@android:color/white" />
+        app:tint="@color/media_icon_button" />
 
     <ImageView
         android:id="@+id/iv_previous"
@@ -25,7 +25,7 @@
         android:contentDescription="@null"
         android:paddingVertical="8dp"
         android:src="@drawable/ic_previous"
-        app:tint="@android:color/white" />
+        app:tint="@color/media_icon_button" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_play_pause"
@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_play"
         app:backgroundTint="@color/colorAccent"
+        android:layout_marginVertical="8dp"
         app:borderWidth="0dp"
         app:fabCustomSize="64dp"
         app:rippleColor="@color/rippleOnSurface"
@@ -46,7 +47,7 @@
         android:contentDescription="@null"
         android:paddingVertical="8dp"
         android:src="@drawable/ic_next"
-        app:tint="@android:color/white" />
+        app:tint="@color/media_icon_button" />
 
     <ImageView
         android:id="@+id/iv_volume"
@@ -56,6 +57,6 @@
         android:contentDescription="@null"
         android:paddingVertical="8dp"
         android:src="@drawable/ic_volume_up"
-        app:tint="@android:color/white" />
+        app:tint="@color/media_icon_button" />
 
 </LinearLayout>
