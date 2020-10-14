@@ -1,5 +1,6 @@
 package com.fabirt.kpopify.presentation.musicplayer
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +17,10 @@ import com.fabirt.kpopify.presentation.viewmodels.MusicPlayerViewModel
 import com.google.android.material.transition.MaterialContainerTransform
 
 class MusicPlayerFragment : Fragment() {
+
+    companion object {
+        private const val TAG = "MusicPlayerFragment"
+    }
 
     private val playerViewModel: MusicPlayerViewModel by activityViewModels()
 
@@ -61,7 +66,7 @@ class MusicPlayerFragment : Fragment() {
         }
 
         binding.includedPlayerControls.ivReplay.setOnClickListener {
-
+            playerViewModel.toggleRepeatMode()
         }
     }
 
@@ -78,7 +83,14 @@ class MusicPlayerFragment : Fragment() {
         playerViewModel.playbackState.observe(viewLifecycleOwner, Observer { playbackState ->
             val iconResource =
                 if (playbackState?.isPlaying == true) R.drawable.ic_pause else R.drawable.ic_play
+
             binding.includedPlayerControls.fabPlayPause.setImageResource(iconResource)
+
+            val replayModeColor = if (playerViewModel.isInRepeatMode)
+                requireContext().getColor(R.color.colorOnSurface)
+            else Color.WHITE
+
+            binding.includedPlayerControls.ivReplay.setColorFilter(replayModeColor)
         })
     }
 
@@ -87,7 +99,7 @@ class MusicPlayerFragment : Fragment() {
         val transition = MaterialContainerTransform().apply {
             duration = 300L
             containerColor = color
-            //drawingViewId = R.id.mainNavHostFragment
+            drawingViewId = R.id.nav_host_fragment
         }
         sharedElementEnterTransition = transition
         sharedElementReturnTransition = transition

@@ -2,6 +2,7 @@ package com.fabirt.kpopify.presentation.viewmodels
 
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.session.PlaybackStateCompat
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -25,6 +26,9 @@ class MusicPlayerViewModel @ViewModelInject constructor(
     val networkError = serviceConnection.networkError
     val currentPlayingSong = serviceConnection.currentPlayingSong
     val playbackState = serviceConnection.playbackState
+
+    val isInRepeatMode: Boolean
+        get() = serviceConnection.mediaController.repeatMode == PlaybackStateCompat.REPEAT_MODE_ONE
 
     init {
         _songs.postValue(Resource.Loading)
@@ -60,6 +64,14 @@ class MusicPlayerViewModel @ViewModelInject constructor(
 
     fun seekTo(pos: Long) {
         serviceConnection.transportControls.seekTo(pos)
+    }
+
+    fun toggleRepeatMode() {
+        if (isInRepeatMode) {
+            serviceConnection.transportControls.setRepeatMode(PlaybackStateCompat.REPEAT_MODE_NONE)
+        } else {
+            serviceConnection.transportControls.setRepeatMode(PlaybackStateCompat.REPEAT_MODE_ONE)
+        }
     }
 
     fun playOrToggleSong(song: Song, toggle: Boolean = false) {
