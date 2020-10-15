@@ -6,9 +6,11 @@ import android.support.v4.media.session.PlaybackStateCompat
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.fabirt.kpopify.core.constants.K
 import com.fabirt.kpopify.core.exoplayer.MusicPlayerServiceConnection
+import com.fabirt.kpopify.core.services.MusicPlayerService
 import com.fabirt.kpopify.core.util.*
 import com.fabirt.kpopify.domain.model.Song
 
@@ -18,6 +20,11 @@ class MusicPlayerViewModel @ViewModelInject constructor(
 
     private val _songs = MutableLiveData<Resource<List<Song>>>()
     val songs: LiveData<Resource<List<Song>>> get() = _songs
+
+    val currentSongDuration: LiveData<Long>
+        get() = Transformations.map(serviceConnection.playbackState) {
+            MusicPlayerService.currentSongDuration
+        }
 
     val isConnected = serviceConnection.isConnected
     val networkError = serviceConnection.networkError

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.fabirt.kpopify.R
@@ -15,6 +16,8 @@ import com.fabirt.kpopify.core.util.bindNetworkImage
 import com.fabirt.kpopify.databinding.FragmentMusicPlayerBinding
 import com.fabirt.kpopify.presentation.viewmodels.MusicPlayerViewModel
 import com.google.android.material.transition.MaterialContainerTransform
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MusicPlayerFragment : Fragment() {
 
@@ -27,6 +30,8 @@ class MusicPlayerFragment : Fragment() {
     private var _binding: FragmentMusicPlayerBinding? = null
     private val binding: FragmentMusicPlayerBinding
         get() = _binding!!
+
+    private var shouldUpdateSeekBar = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +49,7 @@ class MusicPlayerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setOnClickActions()
+        setupSeekBar()
         subscribeToObservers()
     }
 
@@ -70,6 +76,27 @@ class MusicPlayerFragment : Fragment() {
         }
     }
 
+    private fun setupSeekBar() {
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    setCurrentDurationToView(progress.toLong())
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                shouldUpdateSeekBar = false
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                seekBar?.let {
+                    shouldUpdateSeekBar = true
+                    playerViewModel.seekTo(it.progress.toLong())
+                }
+            }
+        })
+    }
+
     private fun subscribeToObservers() {
         playerViewModel.currentPlayingSong.observe(viewLifecycleOwner, Observer { mediaItem ->
             mediaItem?.description?.mediaId?.let {
@@ -92,6 +119,20 @@ class MusicPlayerFragment : Fragment() {
 
             binding.includedPlayerControls.ivReplay.setColorFilter(replayModeColor)
         })
+
+        playerViewModel.currentSongDuration.observe(viewLifecycleOwner, Observer { duration ->
+            binding.seekBar.max = duration.toInt()
+            binding.tvDuration.text = formatLong(duration)
+        })
+    }
+
+    private fun setCurrentDurationToView(value: Long) {
+        binding.tvCurrentPos.text = formatLong(value)
+    }
+
+    private fun formatLong(value: Long): String {
+        val dateFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
+        return dateFormat.format(value)
     }
 
     private fun configureTransitions() {
