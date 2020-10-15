@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.fabirt.kpopify.R
-import com.fabirt.kpopify.core.util.isPlaying
-import com.fabirt.kpopify.core.util.toSong
-import com.fabirt.kpopify.core.util.Resource
-import com.fabirt.kpopify.core.util.bindNetworkImage
+import com.fabirt.kpopify.core.util.*
 import com.fabirt.kpopify.databinding.FragmentPlaylistBinding
 import com.fabirt.kpopify.domain.model.Song
 import com.fabirt.kpopify.presentation.viewmodels.MusicPlayerViewModel
@@ -101,8 +99,13 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
         })
 
         playerViewModel.currentPlayingSong.observe(viewLifecycleOwner, Observer { mediaItem ->
-            binding.includedCurrentSong.container.isVisible =
-                mediaItem?.description?.mediaId != null
+            val showCurrentSongView = mediaItem?.description?.mediaId != null
+
+            binding.includedCurrentSong.container.isVisible = showCurrentSongView
+
+            binding.rvPlaylist.updatePadding(
+                bottom = if (showCurrentSongView) 132.dp else 32.dp
+            )
 
             adapter.setCurrentMediaId(mediaItem?.description?.mediaId)
 

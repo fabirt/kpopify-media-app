@@ -53,6 +53,7 @@ class MusicPlayerNotificationManager(
             setRewindIncrementMs(0L)
             setFastForwardIncrementMs(0L)
             setUseStopAction(true)
+            setUseNavigationActionsInCompactView(true)
         }
     }
 
