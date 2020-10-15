@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat
 import com.fabirt.kpopify.presentation.MainActivity
 import com.fabirt.kpopify.R
 import com.fabirt.kpopify.core.constants.K
-import com.fabirt.kpopify.core.constants.K.NOTIFICATION_CHANNEL_ID
 import com.fabirt.kpopify.core.receivers.DummyReceiver
 import com.fabirt.kpopify.core.receivers.ReplyReceiver
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -88,7 +87,7 @@ class MessagingService : FirebaseMessagingService() {
             .setAllowGeneratedReplies(true)
             .build()
 
-        val notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(this, K.TEST_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setColor(accentColor)
             .setLargeIcon(

@@ -64,6 +64,7 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.rvPlaylist.adapter = null
         _binding = null
     }
 
@@ -129,8 +130,9 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
     }
 
     private fun openMusicPlayerFragment(view: View) {
+        val transitionName = getString(R.string.song_window_transition_name)
         val action = PlaylistFragmentDirections.actionPlaylistFragmentToSongPlayerFragment()
-        val extras = FragmentNavigatorExtras(view to "song_window")
+        val extras = FragmentNavigatorExtras(view to transitionName)
         findNavController().navigate(action, extras)
     }
 }

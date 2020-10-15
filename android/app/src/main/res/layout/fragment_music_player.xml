@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:transitionName="song_window"
+    android:transitionName="@string/song_window_transition_name"
     tools:context=".presentation.musicplayer.MusicPlayerFragment">
 
     <androidx.cardview.widget.CardView

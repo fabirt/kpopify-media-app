@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:transitionName="song_window">
+    android:transitionName="@string/song_window_transition_name">
 
     <View
         android:layout_width="0dp"

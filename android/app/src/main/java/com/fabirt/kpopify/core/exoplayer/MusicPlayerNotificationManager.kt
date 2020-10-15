@@ -41,10 +41,10 @@ class MusicPlayerNotificationManager(
     ): PlayerNotificationManager {
         return PlayerNotificationManager.createWithNotificationChannel(
             context,
-            K.PLAYER_NOTIFICATION_CHANNEL_ID,
-            R.string.player_notification_channel_name,
-            R.string.player_notification_channel_description,
-            K.PLAYER_NOTIFICATION_ID,
+            K.PLAYBACK_NOTIFICATION_CHANNEL_ID,
+            R.string.playback_notification_channel_name,
+            R.string.playback_notification_channel_description,
+            K.PLAYBACK_NOTIFICATION_ID,
             DescriptionAdapter(mediaController),
             notificationListener
         ).apply {
