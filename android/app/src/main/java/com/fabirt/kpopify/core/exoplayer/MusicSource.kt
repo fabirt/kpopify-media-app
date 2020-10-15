@@ -7,7 +7,7 @@ import androidx.core.net.toUri
 import com.fabirt.kpopify.data.network.RemoteMusicDatabase
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.upstream.DataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -53,7 +53,7 @@ class MusicSource @Inject constructor(
         state = MusicSourceState.INITIALIZED
     }
 
-    fun asMediaSource(dataSourceFactory: DefaultDataSourceFactory): ConcatenatingMediaSource {
+    fun asMediaSource(dataSourceFactory: DataSource.Factory): ConcatenatingMediaSource {
         val concatenatingMediaSource = ConcatenatingMediaSource()
         mediaMetadataSongs.forEach { metadata ->
             val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)

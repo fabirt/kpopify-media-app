@@ -12,7 +12,7 @@ import com.fabirt.kpopify.core.constants.K
 import com.fabirt.kpopify.core.exoplayer.*
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class MusicPlayerService : MediaBrowserServiceCompat() {
 
     @Inject
-    lateinit var dataSourceFactory: DefaultDataSourceFactory
+    lateinit var dataSourceFactory: CacheDataSourceFactory
 
     @Inject
     lateinit var exoPlayer: SimpleExoPlayer
