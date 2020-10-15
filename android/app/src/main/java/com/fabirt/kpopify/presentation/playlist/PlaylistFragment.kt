@@ -104,6 +104,8 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
             binding.includedCurrentSong.container.isVisible =
                 mediaItem?.description?.mediaId != null
 
+            adapter.setCurrentMediaId(mediaItem?.description?.mediaId)
+
             mediaItem?.description?.mediaId?.let {
                 displayCurrentSong(mediaItem.toSong())
             }
