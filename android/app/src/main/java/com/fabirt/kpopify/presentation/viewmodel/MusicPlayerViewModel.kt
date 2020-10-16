@@ -1,4 +1,4 @@
-package com.fabirt.kpopify.presentation.viewmodels
+package com.fabirt.kpopify.presentation.viewmodel
 
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
@@ -8,9 +8,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.fabirt.kpopify.core.constants.K
+import com.fabirt.kpopify.core.constant.K
 import com.fabirt.kpopify.core.exoplayer.MusicPlayerServiceConnection
-import com.fabirt.kpopify.core.services.MusicPlayerService
+import com.fabirt.kpopify.core.service.MusicPlayerService
 import com.fabirt.kpopify.core.util.*
 import com.fabirt.kpopify.domain.model.Song
 import kotlinx.coroutines.delay
@@ -115,7 +115,7 @@ class MusicPlayerViewModel @ViewModelInject constructor(
         if (currentPosition != _currentPlaybackPosition.value) {
             _currentPlaybackPosition.postValue(currentPosition)
         }
-        delay(K.PLAYBACK_POSITION_UPDATE_TIME)
+        delay(K.PLAYBACK_POSITION_UPDATE_INTERVAL)
         updateCurrentPlaybackPosition()
     }
 

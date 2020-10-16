@@ -1,6 +1,6 @@
 package com.fabirt.kpopify.data.network
 
-import com.fabirt.kpopify.core.constants.K.PLAYLIST_COLLECTION_NAME
+import com.fabirt.kpopify.core.constant.K.PLAYLIST_COLLECTION_NAME
 import com.fabirt.kpopify.data.network.model.NetworkSong
 import com.fabirt.kpopify.domain.model.Song
 import com.google.firebase.firestore.FirebaseFirestore

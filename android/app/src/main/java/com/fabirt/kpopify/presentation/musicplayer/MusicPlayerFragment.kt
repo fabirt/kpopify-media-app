@@ -19,7 +19,7 @@ import com.fabirt.kpopify.core.util.toSong
 import com.fabirt.kpopify.core.util.bindNetworkImage
 import com.fabirt.kpopify.core.util.isStopped
 import com.fabirt.kpopify.databinding.FragmentMusicPlayerBinding
-import com.fabirt.kpopify.presentation.viewmodels.MusicPlayerViewModel
+import com.fabirt.kpopify.presentation.viewmodel.MusicPlayerViewModel
 import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

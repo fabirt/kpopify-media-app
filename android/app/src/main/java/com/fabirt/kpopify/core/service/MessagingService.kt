@@ -1,4 +1,4 @@
-package com.fabirt.kpopify.core.services
+package com.fabirt.kpopify.core.service
 
 import android.app.Notification
 import android.app.PendingIntent
@@ -13,9 +13,9 @@ import androidx.core.app.RemoteInput
 import androidx.core.content.ContextCompat
 import com.fabirt.kpopify.presentation.MainActivity
 import com.fabirt.kpopify.R
-import com.fabirt.kpopify.core.constants.K
-import com.fabirt.kpopify.core.receivers.DummyReceiver
-import com.fabirt.kpopify.core.receivers.ReplyReceiver
+import com.fabirt.kpopify.core.constant.K
+import com.fabirt.kpopify.core.receiver.DummyReceiver
+import com.fabirt.kpopify.core.receiver.ReplyReceiver
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 

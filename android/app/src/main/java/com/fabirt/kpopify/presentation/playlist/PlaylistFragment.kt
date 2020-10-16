@@ -15,7 +15,7 @@ import com.fabirt.kpopify.R
 import com.fabirt.kpopify.core.util.*
 import com.fabirt.kpopify.databinding.FragmentPlaylistBinding
 import com.fabirt.kpopify.domain.model.Song
-import com.fabirt.kpopify.presentation.viewmodels.MusicPlayerViewModel
+import com.fabirt.kpopify.presentation.viewmodel.MusicPlayerViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.Hold
 import dagger.hilt.android.AndroidEntryPoint

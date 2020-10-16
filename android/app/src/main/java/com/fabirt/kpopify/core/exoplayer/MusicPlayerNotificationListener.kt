@@ -3,8 +3,8 @@ package com.fabirt.kpopify.core.exoplayer
 import android.app.Notification
 import android.content.Intent
 import androidx.core.content.ContextCompat
-import com.fabirt.kpopify.core.constants.K
-import com.fabirt.kpopify.core.services.MusicPlayerService
+import com.fabirt.kpopify.core.constant.K
+import com.fabirt.kpopify.core.service.MusicPlayerService
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 
 class MusicPlayerNotificationListener(

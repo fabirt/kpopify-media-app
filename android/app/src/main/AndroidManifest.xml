@@ -26,7 +26,7 @@
         </activity>
 
         <service
-            android:name=".core.services.MusicPlayerService"
+            android:name=".core.service.MusicPlayerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserServic" />
@@ -34,7 +34,7 @@
         </service>
 
         <service
-            android:name=".core.services.MessagingService"
+            android:name=".core.service.MessagingService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>
@@ -42,8 +42,8 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".core.receivers.ReplyReceiver" />
-        <receiver android:name=".core.receivers.DummyReceiver" />
+        <receiver android:name=".core.receiver.ReplyReceiver" />
+        <receiver android:name=".core.receiver.DummyReceiver" />
 
     </application>
 

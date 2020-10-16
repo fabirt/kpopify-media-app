@@ -9,8 +9,8 @@ import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.fabirt.kpopify.core.constants.K
-import com.fabirt.kpopify.core.services.MusicPlayerService
+import com.fabirt.kpopify.core.constant.K
+import com.fabirt.kpopify.core.service.MusicPlayerService
 import com.fabirt.kpopify.core.util.Event
 import com.fabirt.kpopify.core.util.Resource
 

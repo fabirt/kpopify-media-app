@@ -11,7 +11,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
-import com.fabirt.kpopify.core.constants.K
+import com.fabirt.kpopify.core.constant.K
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 

@@ -1,4 +1,4 @@
-package com.fabirt.kpopify.core.services
+package com.fabirt.kpopify.core.service
 
 import android.app.PendingIntent
 import android.app.Service
@@ -8,7 +8,7 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
-import com.fabirt.kpopify.core.constants.K
+import com.fabirt.kpopify.core.constant.K
 import com.fabirt.kpopify.core.exoplayer.*
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector

@@ -1,6 +1,6 @@
 package com.fabirt.kpopify.core.exoplayer
 
-import com.fabirt.kpopify.core.services.MusicPlayerService
+import com.fabirt.kpopify.core.service.MusicPlayerService
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player
 
