@@ -22,3 +22,9 @@ Android audio playback app.
 - Navigation
 
 ## Screenshots
+
+| ![Playlist](assets/screenshot_1.jpg) | ![Playback State](assets/screenshot_2.jpg) |
+|----------|:-------------:|
+
+| ![Music Player](assets/screenshot_3.jpg) | ![Media Notification](assets/screenshot_4.jpg) |
+|----------|:-------------:|
