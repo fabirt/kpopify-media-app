@@ -21,6 +21,9 @@ inline val PlaybackStateCompat.isStopped: Boolean
     get() = state == PlaybackStateCompat.STATE_NONE ||
             state == PlaybackStateCompat.STATE_ERROR
 
+inline val PlaybackStateCompat.isError: Boolean
+    get() = state == PlaybackStateCompat.STATE_ERROR
+
 inline val PlaybackStateCompat.currentPosition: Long
     get() = if (state == PlaybackStateCompat.STATE_PLAYING) {
         val timeDelta = SystemClock.elapsedRealtime() - lastPositionUpdateTime

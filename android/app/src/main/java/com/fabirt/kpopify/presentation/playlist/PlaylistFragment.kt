@@ -16,6 +16,7 @@ import com.fabirt.kpopify.core.util.*
 import com.fabirt.kpopify.databinding.FragmentPlaylistBinding
 import com.fabirt.kpopify.domain.model.Song
 import com.fabirt.kpopify.presentation.viewmodels.MusicPlayerViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.Hold
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -72,30 +73,7 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
 
     private fun subscribeToObservers() {
         playerViewModel.songs.observe(viewLifecycleOwner, Observer { result ->
-            when (result) {
-                is Resource.Success -> {
-                    binding.progressBar.isVisible = false
-                    binding.topAppBar.isVisible = true
-                    binding.rvPlaylist.isVisible = true
-                    binding.fabPlay.isVisible = true
-                    binding.includedEmptyView.root.isVisible = false
-                    adapter.submitList(result.data)
-                }
-                is Resource.Error -> {
-                    binding.progressBar.isVisible = false
-                    binding.topAppBar.isVisible = false
-                    binding.rvPlaylist.isVisible = false
-                    binding.fabPlay.isVisible = false
-                    binding.includedEmptyView.root.isVisible = true
-                }
-                Resource.Loading -> {
-                    binding.progressBar.isVisible = true
-                    binding.topAppBar.isVisible = false
-                    binding.rvPlaylist.isVisible = false
-                    binding.fabPlay.isVisible = false
-                    binding.includedEmptyView.root.isVisible = false
-                }
-            }
+            handleSongsResult(result)
         })
 
         playerViewModel.currentPlayingSong.observe(viewLifecycleOwner, Observer { mediaItem ->
@@ -119,7 +97,38 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
                 if (playbackState?.isPlaying == true) R.drawable.ic_pause else R.drawable.ic_play
 
             binding.includedCurrentSong.btnPlayPause.setImageResource(iconResource)
+
+            if (playbackState?.isError == true) {
+                showErrorSnackBar()
+            }
         })
+    }
+
+    private fun handleSongsResult(result: Resource<List<Song>>) {
+        when (result) {
+            is Resource.Success -> {
+                binding.progressBar.isVisible = false
+                binding.topAppBar.isVisible = true
+                binding.rvPlaylist.isVisible = true
+                binding.fabPlay.isVisible = true
+                binding.includedEmptyView.root.isVisible = false
+                adapter.submitList(result.data)
+            }
+            is Resource.Error -> {
+                binding.progressBar.isVisible = false
+                binding.topAppBar.isVisible = false
+                binding.rvPlaylist.isVisible = false
+                binding.fabPlay.isVisible = false
+                binding.includedEmptyView.root.isVisible = true
+            }
+            Resource.Loading -> {
+                binding.progressBar.isVisible = true
+                binding.topAppBar.isVisible = false
+                binding.rvPlaylist.isVisible = false
+                binding.fabPlay.isVisible = false
+                binding.includedEmptyView.root.isVisible = false
+            }
+        }
     }
 
     private fun displayCurrentSong(song: Song) {
@@ -139,5 +148,13 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
         val action = PlaylistFragmentDirections.actionPlaylistFragmentToSongPlayerFragment()
         val extras = FragmentNavigatorExtras(view to transitionName)
         findNavController().navigate(action, extras)
+    }
+
+    private fun showErrorSnackBar() {
+        Snackbar.make(
+            requireView(),
+            getString(R.string.playback_network_error),
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 }

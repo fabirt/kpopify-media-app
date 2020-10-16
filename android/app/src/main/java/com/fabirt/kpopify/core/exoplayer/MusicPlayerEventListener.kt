@@ -1,6 +1,5 @@
 package com.fabirt.kpopify.core.exoplayer
 
-import android.widget.Toast
 import com.fabirt.kpopify.core.services.MusicPlayerService
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player
@@ -20,6 +19,7 @@ class MusicPlayerEventListener(
 
     override fun onPlayerError(error: ExoPlaybackException) {
         super.onPlayerError(error)
-        Toast.makeText(musicPlayerService, "An unknown error occured", Toast.LENGTH_LONG).show()
+        // PLayback state is error
+        // Toast.makeText(musicPlayerService, "An unknown error occured", Toast.LENGTH_LONG).show()
     }
 }
