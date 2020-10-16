@@ -2,6 +2,8 @@ package com.fabirt.kpopify.presentation.musicplayer
 
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +12,12 @@ import android.widget.SeekBar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.fabirt.kpopify.R
 import com.fabirt.kpopify.core.util.isPlaying
 import com.fabirt.kpopify.core.util.toSong
 import com.fabirt.kpopify.core.util.bindNetworkImage
+import com.fabirt.kpopify.core.util.isStopped
 import com.fabirt.kpopify.databinding.FragmentMusicPlayerBinding
 import com.fabirt.kpopify.presentation.viewmodels.MusicPlayerViewModel
 import com.google.android.material.transition.MaterialContainerTransform
@@ -114,16 +118,8 @@ class MusicPlayerFragment : Fragment() {
         })
 
         playerViewModel.playbackState.observe(viewLifecycleOwner, Observer { playbackState ->
-            val iconResource =
-                if (playbackState?.isPlaying == true) R.drawable.ic_pause else R.drawable.ic_play
-
-            binding.includedPlayerControls.fabPlayPause.setImageResource(iconResource)
-
-            val replayModeColor = if (playerViewModel.isInRepeatMode)
-                requireContext().getColor(R.color.colorOnSurface)
-            else Color.WHITE
-
-            binding.includedPlayerControls.ivReplay.setColorFilter(replayModeColor)
+            Log.i(TAG, playbackState.toString())
+            handlePlaybackState(playbackState)
         })
 
         playerViewModel.currentSongDuration.observe(viewLifecycleOwner, Observer { duration ->
@@ -139,6 +135,23 @@ class MusicPlayerFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun handlePlaybackState(playbackState: PlaybackStateCompat?) {
+        val iconResource =
+            if (playbackState?.isPlaying == true) R.drawable.ic_pause else R.drawable.ic_play
+
+        binding.includedPlayerControls.fabPlayPause.setImageResource(iconResource)
+
+        val replayModeColor = if (playerViewModel.isInRepeatMode)
+            requireContext().getColor(R.color.colorOnSurface)
+        else Color.WHITE
+
+        binding.includedPlayerControls.ivReplay.setColorFilter(replayModeColor)
+
+        if (playbackState?.isStopped == true) {
+            findNavController().navigateUp()
+        }
     }
 
     private fun setCurrentDurationToView(value: Long) {
