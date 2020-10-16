@@ -14,16 +14,12 @@ class RemoteMusicDatabase @Inject constructor(
 ) {
 
     suspend fun getAllSongs(): List<Song> {
-        return try {
-            firestore.collection(PLAYLIST_COLLECTION_NAME)
-                .get()
-                .await()
-                .documents
-                .map { snapshot ->
-                    NetworkSong.fromMap(snapshot.data!!).asDomainModel()
-                }.sortedBy { it.mediaId }
-        } catch (e: Exception) {
-            emptyList()
-        }
+        return firestore.collection(PLAYLIST_COLLECTION_NAME)
+            .get()
+            .await()
+            .documents
+            .map { snapshot ->
+                NetworkSong.fromMap(snapshot.data!!).asDomainModel()
+            }.sortedBy { it.mediaId }
     }
 }

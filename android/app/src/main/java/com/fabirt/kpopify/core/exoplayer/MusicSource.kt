@@ -11,9 +11,11 @@ import com.google.android.exoplayer2.upstream.DataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
 typealias OnReadyListener = (Boolean) -> Unit
 
+@Singleton
 class MusicSource @Inject constructor(
     private val remoteMusicDatabase: RemoteMusicDatabase
 ) {
@@ -40,24 +42,32 @@ class MusicSource @Inject constructor(
         get() = state == MusicSourceState.INITIALIZED
 
     suspend fun requestMediaData() = withContext(Dispatchers.IO) {
-        state = MusicSourceState.INITIALIZING
-        mediaMetadataSongs = remoteMusicDatabase.getAllSongs().map { song ->
-            MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.mediaId)
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.artist)
-                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.title)
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, song.mediaUrl)
-                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, song.imageUrl)
-                .build()
+        try {
+            state = MusicSourceState.INITIALIZING
+            mediaMetadataSongs = remoteMusicDatabase.getAllSongs().map { song ->
+                MediaMetadataCompat.Builder()
+                    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.mediaId)
+                    .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.artist)
+                    .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.title)
+                    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, song.mediaUrl)
+                    .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, song.imageUrl)
+                    .build()
+            }
+            state = if (mediaMetadataSongs.isEmpty()) MusicSourceState.ERROR
+            else MusicSourceState.INITIALIZED
+
+        } catch (e: Exception) {
+            state = MusicSourceState.ERROR
         }
-        state = MusicSourceState.INITIALIZED
     }
 
     fun asMediaSource(dataSourceFactory: DataSource.Factory): ConcatenatingMediaSource {
         val concatenatingMediaSource = ConcatenatingMediaSource()
         mediaMetadataSongs.forEach { metadata ->
             val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(metadata.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI).toUri())
+                .createMediaSource(
+                    metadata.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI).toUri()
+                )
             concatenatingMediaSource.addMediaSource(mediaSource)
         }
         return concatenatingMediaSource
@@ -82,6 +92,11 @@ class MusicSource @Inject constructor(
             listener(isReady)
             true
         }
+    }
+
+    fun refresh() {
+        onReadyListeners.clear()
+        state = MusicSourceState.CREATED
     }
 }
 

@@ -16,8 +16,11 @@ import com.fabirt.kpopify.domain.model.Song
 import kotlinx.coroutines.delay
 
 class MusicPlayerViewModel @ViewModelInject constructor(
-    private val serviceConnection: MusicPlayerServiceConnection
+    private val serviceConnection: MusicPlayerServiceConnection,
 ) : ViewModel() {
+    companion object {
+        private const val TAG = "MusicPlayerViewModel"
+    }
 
     private val _songs = MutableLiveData<Resource<List<Song>>>()
     val songs: LiveData<Resource<List<Song>>> get() = _songs
@@ -50,6 +53,11 @@ class MusicPlayerViewModel @ViewModelInject constructor(
                     super.onChildrenLoaded(parentId, children)
                     val items = children.map { it.toSong() }
                     _songs.postValue(Resource.Success(items))
+                }
+
+                override fun onError(parentId: String) {
+                    super.onError(parentId)
+                    _songs.postValue(Resource.Error(parentId))
                 }
             })
     }
@@ -109,6 +117,11 @@ class MusicPlayerViewModel @ViewModelInject constructor(
         }
         delay(K.PLAYBACK_POSITION_UPDATE_TIME)
         updateCurrentPlaybackPosition()
+    }
+
+    fun refreshMediaBrowserChildren() {
+        _songs.value = Resource.Loading
+        serviceConnection.refreshMediaBrowserChildren()
     }
 
     override fun onCleared() {

@@ -56,7 +56,7 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
         binding.rvPlaylist.adapter = adapter
         subscribeToObservers()
         binding.includedEmptyView.btnEmpty.setOnClickListener {
-
+            playerViewModel.refreshMediaBrowserChildren()
         }
     }
 

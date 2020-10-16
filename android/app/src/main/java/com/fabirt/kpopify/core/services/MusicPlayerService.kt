@@ -55,9 +55,7 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
     override fun onCreate() {
         super.onCreate()
 
-        serviceScope.launch {
-            musicSource.requestMediaData()
-        }
+        resquestMediaData()
 
         val activityPendingIntent = packageManager.getLaunchIntentForPackage(packageName)?.let {
             PendingIntent.getActivity(this, 0, it, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -96,9 +94,14 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
     override fun onCustomAction(action: String, extras: Bundle?, result: Result<Bundle>) {
         super.onCustomAction(action, extras, result)
         when (action) {
-            K.START_MEDIA_PLAYBACK_ACTION -> musicPlayerNotificationManager.showNotification(
-                exoPlayer
-            )
+            K.START_MEDIA_PLAYBACK_ACTION -> {
+                musicPlayerNotificationManager.showNotification(exoPlayer)
+            }
+            K.REFRESH_MEDIA_BROWSER_CHILDREN -> {
+                musicSource.refresh()
+                resquestMediaData()
+                notifyChildrenChanged(K.MEDIA_ROOT_ID)
+            }
             else -> Unit
         }
     }
@@ -165,5 +168,11 @@ class MusicPlayerService : MediaBrowserServiceCompat() {
         exoPlayer.prepare(musicSource.asMediaSource(dataSourceFactory))
         exoPlayer.seekTo(indexToPlay, 0L)
         exoPlayer.playWhenReady = playWhenReady
+    }
+
+    private fun resquestMediaData() {
+        serviceScope.launch {
+            musicSource.requestMediaData()
+        }
     }
 }

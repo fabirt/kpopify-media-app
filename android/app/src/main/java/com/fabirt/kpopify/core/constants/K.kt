@@ -16,6 +16,8 @@ object K {
 
     const val PLAYBACK_POSITION_UPDATE_TIME = 1000L
 
+    const val REFRESH_MEDIA_BROWSER_CHILDREN = "REFRESH_MEDIA_BROWSER_CHILDREN"
+
     //-------- Notification actions testing -----------------------------------
     const val TEST_NOTIFICATION_CHANNEL_ID = "KPOPIFY_NOTIFICATION_CHANNEL"
 

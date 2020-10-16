@@ -57,6 +57,10 @@ class MusicPlayerServiceConnection(context: Context) {
         mediaBrowser.unsubscribe(parentId, callback)
     }
 
+    fun refreshMediaBrowserChildren() {
+        mediaBrowser.sendCustomAction(K.REFRESH_MEDIA_BROWSER_CHILDREN, null, null)
+    }
+
     private inner class MediaBrowserConnectionCallback(
         private val context: Context
     ) : MediaBrowserCompat.ConnectionCallback() {
