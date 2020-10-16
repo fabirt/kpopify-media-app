@@ -14,8 +14,12 @@ object K {
 
     const val START_MEDIA_PLAYBACK_ACTION = "START_MEDIA_PLAYBACK_ACTION"
 
-    // Notification actions testing
+    const val PLAYBACK_POSITION_UPDATE_TIME = 1000L
+
+    //-------- Notification actions testing -----------------------------------
     const val TEST_NOTIFICATION_CHANNEL_ID = "KPOPIFY_NOTIFICATION_CHANNEL"
+
     const val KEY_TEXT_REPLY = "KEY_TEXT_REPLY"
+
     const val EXTRA_ACTION_TEST = "NOTIFICATION_ID"
 }

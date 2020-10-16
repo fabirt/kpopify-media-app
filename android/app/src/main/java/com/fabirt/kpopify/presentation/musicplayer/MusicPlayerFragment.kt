@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.fabirt.kpopify.R
 import com.fabirt.kpopify.core.util.isPlaying
 import com.fabirt.kpopify.core.util.toSong
@@ -16,6 +17,7 @@ import com.fabirt.kpopify.core.util.bindNetworkImage
 import com.fabirt.kpopify.databinding.FragmentMusicPlayerBinding
 import com.fabirt.kpopify.presentation.viewmodels.MusicPlayerViewModel
 import com.google.android.material.transition.MaterialContainerTransform
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -51,6 +53,10 @@ class MusicPlayerFragment : Fragment() {
         setOnClickActions()
         setupSeekBar()
         subscribeToObservers()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            playerViewModel.updateCurrentPlaybackPosition()
+        }
     }
 
     override fun onDestroyView() {
@@ -123,6 +129,15 @@ class MusicPlayerFragment : Fragment() {
         playerViewModel.currentSongDuration.observe(viewLifecycleOwner, Observer { duration ->
             binding.seekBar.max = duration.toInt()
             binding.tvDuration.text = formatLong(duration)
+        })
+
+        playerViewModel.currentPlaybackPosition.observe(viewLifecycleOwner, Observer { pos ->
+            pos?.let {
+                if (shouldUpdateSeekBar) {
+                    binding.seekBar.progress = it.toInt()
+                    binding.tvCurrentPos.text = formatLong(it)
+                }
+            }
         })
     }
 

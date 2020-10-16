@@ -13,6 +13,7 @@ import com.fabirt.kpopify.core.exoplayer.MusicPlayerServiceConnection
 import com.fabirt.kpopify.core.services.MusicPlayerService
 import com.fabirt.kpopify.core.util.*
 import com.fabirt.kpopify.domain.model.Song
+import kotlinx.coroutines.delay
 
 class MusicPlayerViewModel @ViewModelInject constructor(
     private val serviceConnection: MusicPlayerServiceConnection
@@ -25,6 +26,9 @@ class MusicPlayerViewModel @ViewModelInject constructor(
         get() = Transformations.map(serviceConnection.playbackState) {
             MusicPlayerService.currentSongDuration
         }
+
+    private val _currentPlaybackPosition = MutableLiveData<Long>()
+    val currentPlaybackPosition: LiveData<Long> get() = _currentPlaybackPosition
 
     val isConnected = serviceConnection.isConnected
     val networkError = serviceConnection.networkError
@@ -96,6 +100,15 @@ class MusicPlayerViewModel @ViewModelInject constructor(
                 else -> Unit
             }
         }
+    }
+
+    suspend fun updateCurrentPlaybackPosition() {
+        val currentPosition = playbackState.value?.currentPosition
+        if (currentPosition != _currentPlaybackPosition.value) {
+            _currentPlaybackPosition.postValue(currentPosition)
+        }
+        delay(K.PLAYBACK_POSITION_UPDATE_TIME)
+        updateCurrentPlaybackPosition()
     }
 
     override fun onCleared() {
