@@ -13,13 +13,15 @@ Android audio playback app.
 
 ## Libraries used
 
-- Android KTK
+- Android KTX
 - ExoPlayer
 - Firebase Firestore
 - Glide
 - Hilt
 - Kotlin coroutines
+- LiveData
 - Navigation
+- ViewModel
 
 ## Screenshots
 
