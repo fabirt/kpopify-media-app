@@ -24,4 +24,11 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="fontFamily">@font/nunito_bold</item>
     </style>
+
+    <style name="ShapeAppearance.App.CircleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="backgroundColor">@color/colorTransparent</item>
+        <!-- <item name="cornerRadius">16dp</item>-->
+    </style>
 </resources>

@@ -16,28 +16,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/iv_container"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_song"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:adjustViewBounds="true"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="50dp"
-        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/iv_song"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            android:src="@drawable/playlist_image" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView"
+        app:srcCompat="@drawable/playlist_image" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -51,7 +41,7 @@
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_play_pause"
-        app:layout_constraintStart_toEndOf="@id/iv_container"
+        app:layout_constraintStart_toEndOf="@id/iv_song"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Kill this love" />
 
@@ -61,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/colorAccent"
+        android:contentDescription="@null"
         app:borderWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
