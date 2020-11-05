@@ -170,6 +170,8 @@ class MusicPlayerFragment : Fragment() {
             duration = transitionDuration.toLong()
             containerColor = color
             drawingViewId = R.id.nav_host_fragment
+            scrimColor = Color.TRANSPARENT
+            setAllContainerColors(color)
         }
         sharedElementEnterTransition = transition
         sharedElementReturnTransition = transition

@@ -18,6 +18,7 @@ import com.fabirt.kpopify.domain.model.Song
 import com.fabirt.kpopify.presentation.viewmodel.MusicPlayerViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.Hold
+import com.google.android.material.transition.MaterialElevationScale
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,6 +42,14 @@ class PlaylistFragment : Fragment(), PlaylistEventDispatcher {
             duration = transitionDuration.toLong()
         }
 
+        /*
+        exitTransition = MaterialElevationScale(false).apply {
+            duration = transitionDuration.toLong()
+        }
+        reenterTransition = MaterialElevationScale(true).apply {
+            duration = transitionDuration.toLong()
+        }
+        */
         adapter = SongAdapter(this)
     }
 
